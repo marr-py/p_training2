@@ -6,9 +6,7 @@ import unittest
 
 class TestAddGroup3(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Firefox()
-        binary = FirefoxBinary("C:\Program Files\Mozilla Firefox\Firefox.exe")
-        self.wd = webdriver.Firefox(firefox_binary=binary)
+        self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(30)
 
     def test_add_group3(self):
