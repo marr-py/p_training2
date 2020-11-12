@@ -2,6 +2,7 @@
 from selenium import webdriver
 import unittest
 from group import Group
+from contact import Contact
 
 
 class TestAddGroup3(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestAddGroup3(unittest.TestCase):
         self.open_groups_page(wd)
         self.create_group(wd, Group(groupname="Grupa nr 11", grouphead1="naglowek nr 11", groupfooter1="stopka nr 11"))
         self.return_to_groups_page(wd)
-        self.add_contact_no_group(wd)
+        self.add_contact_no_group(Contact(firstname="Jerry", middlename="K.", lastname="O'Connell", company="Nokia", address="Test Ave. 1", phone="777777777", mobile="456456456", workphone="789789987798", emial="oconnnell@test.com")
         self.logout(wd)
 
     def test_add_empty_group(self):
@@ -26,6 +27,7 @@ class TestAddGroup3(unittest.TestCase):
         self.open_groups_page(wd)
         self.create_group(wd, Group(groupname=" ", grouphead1="", groupfooter1=""))
         self.return_to_groups_page(wd)
+        self.add_contact_no_group(Contact(firstname="Mary", middlename="Jane", lastname="Kelly", company="Huawei", address="Test Ave. 5",phone="1111111111", mobile="55555555", workphone="9999999", emial="mjkelly@hhhh.com")
         self.logout(wd)
 
     def logout(self, wd):
@@ -66,44 +68,44 @@ class TestAddGroup3(unittest.TestCase):
     def return_to_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
 
-    def add_contact_no_group(self, wd):
+    def add_contact_no_group(self, wd, contact, ="sdf"):
         # fill contact form
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("John")
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("Maynard")
+        wd.find_element_by_name("middlename").send_keys(contact.middlename)
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("Smith")
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("Kane")
+        wd.find_element_by_name("nickname").send_keys(contact.nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys("n/a")
+        wd.find_element_by_name("title").send_keys(contact.title)
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys("Solution Ltd.")
+        wd.find_element_by_name("company").send_keys(contact.company)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("Test Ave.")
+        wd.find_element_by_name("address").send_keys(contact.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("132456789")
+        wd.find_element_by_name("home").send_keys(contact.phone)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("321654987")
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("789456123")
+        wd.find_element_by_name("work").send_keys(contact.workphone)
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("fax").clear()
-        wd.find_element_by_name("fax").send_keys("465465465")
+        wd.find_element_by_name("fax").send_keys(contact.fax)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("jmsmith@test.com")
+        wd.find_element_by_name("email").send_keys(contact.emial)
         #date of birth
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text("3")
