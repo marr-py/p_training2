@@ -1,28 +1,72 @@
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+import unittest
+from group import Group
 
 
-class TestAddContact(unittest.TestCase):
-        """def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.base_url = "https://www.google.com/"
-        self.verificationErrors = []
-        self.accept_next_alert = True """
+class TestAddGroup3(unittest.TestCase):
+    def setUp(self):
+        self.wd = webdriver.Chrome()
+        self.wd.implicitly_wait(30)
 
-    def test_add_contact(self):
-        wd = self.driver
-        # open page
-        wd.get("http://localhost/addressbook/")
-        # login
+    def test_add_group3b(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_groups_page(wd)
+        self.create_group(wd, Group(groupname="Grupa nr 11", grouphead1="naglowek nr 11", groupfooter1="stopka nr 11"))
+        self.return_to_groups_page(wd)
+        self.add_contact_no_group(wd)
+        self.logout(wd)
+
+    def test_add_empty_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_groups_page(wd)
+        self.create_group(wd, Group(groupname=" ", grouphead1="", groupfooter1=""))
+        self.return_to_groups_page(wd)
+        self.logout(wd)
+
+    def logout(self, wd):
+        wd.find_element_by_link_text("Logout").click()
+
+    def create_group(self, wd, group):
+        # init group creation
+        wd.find_element_by_name("new").click()
+        # fill group form
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.groupname)
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys(group.grouphead1)
+        wd.find_element_by_name("group_footer").click()
+        wd.find_element_by_name("group_footer").clear()
+        wd.find_element_by_name("group_footer").send_keys(group.groupfooter1)
+        # submit group creation
+        wd.find_element_by_name("submit").click()
+
+    def open_groups_page(self, wd):
+        wd.find_element_by_link_text("groups").click()
+
+    def login(self, wd, username, password):
+        wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_id("LoginForm").submit()
-        add_contact_no_group(wd)
+        wd.find_element_by_name("pass").send_keys(password)
+        wd.find_element_by_xpath("//input[@value='Login']").click()
 
+    def open_home_page(self, wd):
+        wd.get("http://localhost/addressbook/")
 
-    def test_add_contact_no_group(wd):
+    def return_to_groups_page(self, wd):
+        wd.find_element_by_link_text("groups").click()
+
+    def add_contact_no_group(self, wd):
         # fill contact form
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
@@ -60,6 +104,7 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys("jmsmith@test.com")
+        #date of birth
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text("3")
         wd.find_element_by_xpath("//option[@value='3']").click()
@@ -73,47 +118,22 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys("1955")
+        # anniversary date
         wd.find_element_by_name("aday").click()
-        Select(wd.find_element_by_name("aday")).select_by_visible_text("18")
+        Select.wd.find_element_by_name("aday")).select_by_visible_text("18")
         wd.find_element_by_xpath("(//option[@value='18'])[2]").click()
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys("2018")
+        # add note
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("test notes")
+        # submit contact
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-
-def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
-
     def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
+        self.wd.quit()
 
 
 if __name__ == "__main__":

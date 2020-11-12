@@ -3,6 +3,7 @@ from selenium import webdriver
 import unittest
 from group import Group
 
+
 class TestAddGroup3(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Chrome()
@@ -63,6 +64,7 @@ class TestAddGroup3(unittest.TestCase):
 
     def return_to_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
+
 
     def tearDown(self):
         self.wd.quit()

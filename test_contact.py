@@ -1,37 +1,31 @@
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+import unittest
 
 
 class TestAddContact(unittest.TestCase):
-        """def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.base_url = "https://www.google.com/"
-        self.verificationErrors = []
-        self.accept_next_alert = True """
+    def setUp(self):
+        self.wd = webdriver.Chrome()
+        self.wd.implicitly_wait(30)
 
     def test_add_contact(self):
-        wd = self.driver
-        # open page
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
-        # login
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("secret")
         wd.find_element_by_id("LoginForm").submit()
-        add_contact_no_group(wd)
-
-
-    def test_add_contact_no_group(wd):
-        # fill contact form
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("John")
+        wd.find_element_by_name("firstname").send_keys("Josh")
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("Maynard")
+        wd.find_element_by_name("middlename").send_keys("")
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("Smith")
+        wd.find_element_by_name("lastname").send_keys("McCain")
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys("Kane")
         wd.find_element_by_name("title").click()
@@ -46,20 +40,20 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("132456789")
+        wd.find_element_by_name("home").send_keys("778989797898797")
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("321654987")
+        wd.find_element_by_name("mobile").send_keys("8798799897")
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys("789456123")
+        wd.find_element_by_name("work").send_keys("5223232121")
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("fax").clear()
         wd.find_element_by_name("fax").send_keys("465465465")
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("jmsmith@test.com")
+        wd.find_element_by_name("email").send_keys("fakd78iujh@test.com")
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text("3")
         wd.find_element_by_xpath("//option[@value='3']").click()
@@ -84,36 +78,8 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("notes").send_keys("test notes")
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-
-def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
-
-    def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
+     def tearDown(self):
+        self.wd.quit()
 
 
 if __name__ == "__main__":
