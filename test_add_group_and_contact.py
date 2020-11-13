@@ -17,7 +17,7 @@ class TestAddGroup3(unittest.TestCase):
         self.open_groups_page(wd)
         self.create_group(wd, Group(groupname="Grupa nr 11", grouphead1="naglowek nr 11", groupfooter1="stopka nr 11"))
         self.return_to_groups_page(wd)
-        self.add_contact_no_group(Contact(firstname="Jerry", middlename="K.", lastname="O'Connell", company="Nokia", address="Test Ave. 1", phone="777777777", mobile="456456456", workphone="789789987798", emial="oconnnell@test.com")
+        self.add_contact_no_group(wd, Contact(firstname="Jerry", middlename="K.", nickname="JUP", lastname="O'Connell", title="Snowman", company="Nokia", address="Test Ave. 1", phone="777777777", mobile="456456456", workphone="789789987798", fax="+44213111", email="oconnnell@test.com"))
         self.logout(wd)
 
     def test_add_empty_group(self):
@@ -27,7 +27,7 @@ class TestAddGroup3(unittest.TestCase):
         self.open_groups_page(wd)
         self.create_group(wd, Group(groupname=" ", grouphead1="", groupfooter1=""))
         self.return_to_groups_page(wd)
-        self.add_contact_no_group(Contact(firstname="Mary", middlename="Jane", lastname="Kelly", company="Huawei", address="Test Ave. 5",phone="1111111111", mobile="55555555", workphone="9999999", emial="mjkelly@hhhh.com")
+        self.add_contact_no_group(wd, Contact(firstname="Mary", middlename="Jane", nickname="MJ",lastname="Kelly", title="director", company="Huawei", address="Test Ave. 5",phone="1111111111", mobile="55555555", workphone="9999999", fax="+482312312", email="mjkelly@hhhh.com"))
         self.logout(wd)
 
     def logout(self, wd):
@@ -68,7 +68,7 @@ class TestAddGroup3(unittest.TestCase):
     def return_to_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
 
-    def add_contact_no_group(self, wd, contact, ="sdf"):
+    def add_contact_no_group(self, wd, contact):
         # fill contact form
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
@@ -105,28 +105,8 @@ class TestAddGroup3(unittest.TestCase):
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.emial)
-        #date of birth
-        wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text("3")
-        wd.find_element_by_xpath("//option[@value='3']").click()
-        wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text("December")
-        wd.find_element_by_xpath("(//option[@value='December'])[2]").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("July")
-        wd.find_element_by_xpath("//option[@value='July']").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys("1955")
-        # anniversary date
-        wd.find_element_by_name("aday").click()
-        Select.wd.find_element_by_name("aday")).select_by_visible_text("18")
-        wd.find_element_by_xpath("(//option[@value='18'])[2]").click()
-        wd.find_element_by_name("ayear").click()
-        wd.find_element_by_name("ayear").clear()
-        wd.find_element_by_name("ayear").send_keys("2018")
+        wd.find_element_by_name("email").send_keys(contact.email)
+
         # add note
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
