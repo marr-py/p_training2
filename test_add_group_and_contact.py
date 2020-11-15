@@ -12,28 +12,33 @@ class TestAddGroup3(unittest.TestCase):
 
     def test_add_group3b(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group(groupname="Grupa nr 11", grouphead1="naglowek nr 11", groupfooter1="stopka nr 11"))
-        self.return_to_groups_page(wd)
-        self.add_contact_no_group(wd, Contact(firstname="Jerry", middlename="K.", nickname="JUP", lastname="O'Connell", title="Snowman", company="Nokia", address="Test Ave. 1", phone="777777777", mobile="456456456", workphone="789789987798", fax="+44213111", email="oconnnell@test.com"))
         self.logout(wd)
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group(groupname=" ", grouphead1="", groupfooter1=""))
-        self.return_to_groups_page(wd)
+        self.logout(wd)
+
+    def test_add_contact_MJ(self):
+        wd = self.wd
+        self.login(wd, username="admin", password="secret")
         self.add_contact_no_group(wd, Contact(firstname="Mary", middlename="Jane", nickname="MJ",lastname="Kelly", title="director", company="Huawei", address="Test Ave. 5",phone="1111111111", mobile="55555555", workphone="9999999", fax="+482312312", email="mjkelly@hhhh.com"))
         self.logout(wd)
+
+    def test_add_contact_JK(self):
+        wd = self.wd
+        self.login(wd, username="admin", password="secret")
+        self.add_contact_no_group(wd, Contact(firstname="Jerry", middlename="K.", nickname="JUP", lastname="O'Connell", title="Snowman", company="Nokia", address="Test Ave. 1", phone="777777777", mobile="456456456", workphone="789789987798", fax="+44213111", email="oconnnell@test.com"))
+       self.logout(wd)
 
     def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
     def create_group(self, wd, group):
+        self.open_groups_page(wd)
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group form
@@ -49,11 +54,13 @@ class TestAddGroup3(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.groupfooter1)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        self.return_to_groups_page(wd)
 
     def open_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
