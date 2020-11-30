@@ -6,6 +6,7 @@ class ContactHelper:
     def add_contact_no_group(self, contact):
         # fill contact form
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -70,8 +71,8 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        # open contact page
-        wd.find_element_by_link_text("home").click()
+        if not len(wd.find_elements_by_name("All e-mail")) > 0:
+            wd.find_element_by_link_text("home").click()
 
     def contact_count(self):
         wd = self.app.wd
