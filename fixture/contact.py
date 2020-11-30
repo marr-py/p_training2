@@ -60,11 +60,20 @@ class ContactHelper:
 
     def change_contact(self):
         wd = self.app.wd
-        # open contact page
-        wd.find_element_by_link_text("home").click()
+        self.open_home_page()
         # edit first row of contact
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("YYYYYYYY")
         wd.find_element_by_name("update").click()
+
+    def open_home_page(self):
+        wd = self.app.wd
+        # open contact page
+        wd.find_element_by_link_text("home").click()
+
+    def contact_count(self):
+        wd = self.app.wd
+        self.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
