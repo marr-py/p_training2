@@ -5,3 +5,10 @@ class Group:
         self.groupfooter1 = groupfooter1
         self.id = id
 
+    def __repr__(self):
+        return "%s:%s" % (self.id, self.groupname)
+
+    def __eq__(self, other):
+        return (self.id is None or other.id is None or self.id == other.id) and self.groupname == other.groupname
+
+    
